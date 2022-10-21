@@ -37,20 +37,20 @@ export const sliderSettings = {
 
 export function addIDToSessionStorage(Id){
     const list = JSON.parse(sessionStorage.getItem('movies')) || [];
-    
+
     if(!list.includes(Id)){
-        list.push(Id);
+        list.unshift(Id);
     }else{
         const index = list.indexOf(Id);
         list.splice(index, 1);
-        list.push(Id);
+        list.unshift(Id);
     }
     sessionStorage.setItem('movies', JSON.stringify(list));
 }
 
 export function getData (){
     const tendingNow = [...data.TendingNow];
-    const listIds = JSON.parse(sessionStorage.getItem('movies')).reverse() || [];
+    const listIds = JSON.parse(sessionStorage.getItem('movies')) || [];
     const listData = [];
 
     tendingNow.sort((prev, next)=> {
