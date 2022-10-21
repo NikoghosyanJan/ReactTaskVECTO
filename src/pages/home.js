@@ -1,25 +1,29 @@
-import { useEffect, useState } from "react";
-import bgImage from "../assets/FeaturedCoverImage.png";
+import { useState } from "react";
 import TrendingSlider from "../components/TrendingSlider";
 import { getData } from "../helpers";
-// import data from "../data/data.json"
 import "./style.scss"
 
+//  👇️ GET DATA WITH SPECIAL FUNCTION
 const data = getData()
 
 export default function Home() {
     const [featured, setFeatured] = useState(data.Featured);
     const [play, setPlay] = useState(false);
-    // const [data, setData] = useState({})
-console.log(data, "data");
 
-    // const  getDuration = (msc)=> {
-    //     const time = (msc/3600).toString().split(".")
+    const  getDuration = (time)=> {
+        // CONVERT SECONDS TO HOURS AND MINUTES
+        let seconds = time;
+        let minutes = Math.floor(time / 60);
+        let hours = Math.floor(minutes / 60);
 
-    //     const hours = time[0];
-    //     const min = Math.round("0." + time[1])
-    //      return hours + "h" + min + "m"
-    // }
+        seconds = seconds % 60;
+        minutes = seconds >= 30 ? minutes + 1 : minutes;
+        minutes = minutes % 60;
+
+        hours = hours % 24;
+
+        return hours + "h" + " " + minutes + "m"
+    }
 
     return (
         <main className="page-main">
@@ -48,7 +52,8 @@ console.log(data, "data");
                     <span>{featured.ReleaseYear}</span>
                     <span>{featured.MpaRating}</span>
                     <span>
-                        {featured.Duration}
+                        {/* 👇️  CONVERT SECONDS TO HOURS AND MINUTES  */}
+                        {getDuration(featured.Duration)}
                     </span>
                 </div>
                 <p className="description">{featured.Description}</p>
@@ -57,6 +62,7 @@ console.log(data, "data");
                     <button>More Info</button>
                 </div>
             </div>
+            {/*  👇️ PASS WITH SPREED OPERATOR, BECAUSE THE DATA IS A SET */}
             <TrendingSlider
                 data={[...data.TendingNow]}
                 setFeatured={setFeatured}

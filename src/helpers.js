@@ -1,5 +1,52 @@
 import data from "./data/data.json"
 
+export function addIDToSessionStorage(Id){
+    //  👇️ CHECK, SESSION STORAGE IS INCLUDING ITEMS
+    const list = JSON.parse(sessionStorage.getItem('movies')) || [];
+
+    if(!list.includes(Id)){
+        //  👇️IF LIST NOT CONTAINED,  ADD FRONT
+        list.unshift(Id);
+    }else{
+        //  👇️IF CONTAINED MOVE TO FRONT
+        const index = list.indexOf(Id);
+        list.splice(index, 1);
+        list.unshift(Id);
+    }
+    //  👇️  END ADD NEW LIST TO SESSION STORAGE
+    sessionStorage.setItem('movies', JSON.stringify(list));
+}
+
+export function getData (){
+    // 👇️ TAKE TendingNow FROM JSON FILE
+    const tendingNow = [...data.TendingNow];
+    //  👇️ CHECK, SESSION STORAGE IS INCLUDING ITEMS
+    const listIds = JSON.parse(sessionStorage.getItem('movies')) || [];
+    const listData = [];
+
+    //  👇️  SORT BY LAST ADDED
+    tendingNow.sort((prev, next)=> {
+        let prevDate = new Date(prev.Date).getTime();
+        let nextDate = new Date(next.Date).getTime();
+        return nextDate - prevDate
+    });
+
+    if(listIds.length){
+        //  IF SESSION STORAGE INCLUDES ITEMS, THE PUSH TO listData
+        listIds.forEach(Id => {
+            listData.push(tendingNow.find(item => item.Id === Id))
+        })
+    }
+
+    const result = {
+        Featured: data.Featured,
+        // CRETE A NEW SET, FIRST ITEMS FROM SESSION STORAGE, AND THEN SORTED
+        TendingNow: new Set([...listData, ...tendingNow])
+    }
+
+    return result
+}
+
 export const sliderSettings = {
     dots: false,
     infinite: false,
@@ -34,41 +81,3 @@ export const sliderSettings = {
         }
     ]
 };
-
-export function addIDToSessionStorage(Id){
-    const list = JSON.parse(sessionStorage.getItem('movies')) || [];
-
-    if(!list.includes(Id)){
-        list.unshift(Id);
-    }else{
-        const index = list.indexOf(Id);
-        list.splice(index, 1);
-        list.unshift(Id);
-    }
-    sessionStorage.setItem('movies', JSON.stringify(list));
-}
-
-export function getData (){
-    const tendingNow = [...data.TendingNow];
-    const listIds = JSON.parse(sessionStorage.getItem('movies')) || [];
-    const listData = [];
-
-    tendingNow.sort((prev, next)=> {
-        let prevDate = new Date(prev.Date).getTime();
-        let nextDate = new Date(next.Date).getTime();
-        return nextDate - prevDate
-    });
-
-    if(listIds.length){
-        listIds.forEach(Id => {
-            listData.push(tendingNow.find(item => item.Id === Id))
-        })
-    }
-
-    const result = {
-        Featured: data.Featured,
-        TendingNow: new Set([...listData, ...tendingNow])
-    }
-
-    return result
-}

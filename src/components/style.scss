@@ -8,6 +8,9 @@ nav {
     width: 100%;
     padding: 2%;
     background-color: rgba(0 0 0 / 80%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     .navigation {
 
@@ -15,7 +18,6 @@ nav {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 100%;
         grid-row-gap: 15px;
     }
     .nav-item {
@@ -23,9 +25,16 @@ nav {
         display: flex;
         align-items: center;
         grid-column-gap: 5%;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: 0.25s;
+
+        &:hover{
+            background-color: #7f99e6;
+
+        }
         &.active {
             background-color: #3b486d;
-            border-radius: 50%;
         }
         .image {
             display: flex;
@@ -36,41 +45,115 @@ nav {
             }
         }
         .item-name {
+            white-space: nowrap;
             width: 0;
             overflow: hidden;
             color: #ffffff;
         }
     }
-    &:hover {
-        max-width: 25vw;
-        background-color: rgba(0 0 0 / 80%);
+
+     .user-info{
+        opacity: 0;
+         display: flex;
+         align-items: center;
+         >div{
+             width: 60px;
+             height: 60px;
+             border-radius: 50%;
+             overflow: hidden;
+             img{
+                 width: 100%;
+                 object-fit: contain;
+             }
+         }
+         h1{
+             color: #FFFFFF;
+             margin-left: 16px;
+         }
+    }
+
+    .extra-menu{
+        opacity: 0;
+
+        p{
+            cursor: pointer;
+            color: gray;
+            text-transform: uppercase;
+            margin: 8px 0;
+            &:hover{
+                color: #FFFFFF;
+            }
+        }
+    }
+
+
+    &.hovered{
         animation-name: nav;
         animation-duration: 0.5s;
         animation-fill-mode: forwards;
+        .nav-item{
+            animation-name: nav-item;
+            animation-duration: 0.5s;
+            animation-fill-mode: forwards;
+            .item-name{
+                animation-name: item-name;
+                animation-duration: 0.5s;
+                animation-fill-mode: forwards;
+            }
+        }
+    }
+
+    &.unhovered{
+        animation-name: nav-unhovered;
+        animation-duration: 0.5s;
+        animation-fill-mode: forwards;
+        .nav-item{
+            animation-name: nav-item-unhovered;
+            animation-duration: 0.5s;
+            animation-fill-mode: forwards;
+            .item-name{
+                animation-name: item-name-unhovered;
+                animation-duration: 0.5s;
+                animation-fill-mode: forwards;
+            }
+        }
+    }
+
+    &:hover {
+        max-width: 25vw;
+        background-color: rgba(0 0 0 / 80%);
+
+        .user-info{
+            opacity: 1;
+        }
 
         .nav-item {
             border-radius: 10px;
             width: 100%;
-            animation-name: nav-item;
-            animation-duration: 0.5s;
-            animation-fill-mode: forwards;
+
             .item-name {
-                animation-name: item-name;
-                animation-duration: 0.5s;
-                animation-fill-mode: forwards;
+
                 display: block;
                 overflow: unset;
                 width: unset;
             }
+        }
+
+        .extra-menu{
+            opacity: 1;
+
         }
     }
 }
 
 .treding-now-section{
     overflow: hidden;
+    position: relative;
     >h1{
         color: #F1F1F1;
-        margin-bottom: 15px;
+        position: absolute;
+        left: 0;
+        top: -15px;
     }
     .slick-list{
         .slick-track{
@@ -94,6 +177,17 @@ nav {
 
     }
 }
+@keyframes nav-unhovered {
+    from {
+        max-width: 25vw;
+        background-color: rgba(0 0 0 / 80%);
+    }
+    to {
+        max-width: 9vw;
+        background-color: rgba(0, 0, 0, 0);
+
+    }
+}
 @keyframes nav-item {
     from {
     }
@@ -103,12 +197,33 @@ nav {
         grid-column-gap: 15%;
     }
 }
+@keyframes nav-item-unhovered {
+    from {
+        border-radius: 10px;
+        width: 100%;
+        grid-column-gap: 15%;
+    }
+    to {
+        border-radius: 50%;
+        width: 60px;
+        grid-column-gap: unset;
+
+    }
+}
 @keyframes item-name {
     from {
         opacity: 0;
     }
     to {
         opacity: 1;
+    }
+}
+@keyframes item-name-unhovered {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
     }
 }
 

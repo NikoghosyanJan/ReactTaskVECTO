@@ -31,3 +31,9 @@ export const navData = [
         name: "Watch Later"
     },
 ];
+
+export const extraMenuData = [
+    "language",
+    "get help",
+    "exit"
+]
