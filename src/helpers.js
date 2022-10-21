@@ -37,7 +37,12 @@ export const sliderSettings = {
 
 export function addIDToSessionStorage(Id){
     const list = JSON.parse(sessionStorage.getItem('movies')) || [];
+    
     if(!list.includes(Id)){
+        list.push(Id);
+    }else{
+        const index = list.indexOf(Id);
+        list.splice(index, 1);
         list.push(Id);
     }
     sessionStorage.setItem('movies', JSON.stringify(list));
@@ -45,7 +50,7 @@ export function addIDToSessionStorage(Id){
 
 export function getData (){
     const tendingNow = [...data.TendingNow];
-    const listIds = JSON.parse(sessionStorage.getItem('movies')) || [];
+    const listIds = JSON.parse(sessionStorage.getItem('movies')).reverse() || [];
     const listData = [];
 
     tendingNow.sort((prev, next)=> {
@@ -64,6 +69,6 @@ export function getData (){
         Featured: data.Featured,
         TendingNow: new Set([...listData, ...tendingNow])
     }
-    
+
     return result
 }
