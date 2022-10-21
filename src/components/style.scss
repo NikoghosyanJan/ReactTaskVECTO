@@ -1,0 +1,114 @@
+nav {
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    max-width: 9vw;
+    width: 100%;
+    padding: 2%;
+    background-color: rgba(0 0 0 / 80%);
+
+    .navigation {
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        grid-row-gap: 15px;
+    }
+    .nav-item {
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        grid-column-gap: 5%;
+        &.active {
+            background-color: #3b486d;
+            border-radius: 50%;
+        }
+        .image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+                width: 30px;
+            }
+        }
+        .item-name {
+            width: 0;
+            overflow: hidden;
+            color: #ffffff;
+        }
+    }
+    &:hover {
+        max-width: 25vw;
+        background-color: rgba(0 0 0 / 80%);
+        animation-name: nav;
+        animation-duration: 0.5s;
+        animation-fill-mode: forwards;
+
+        .nav-item {
+            border-radius: 10px;
+            width: 100%;
+            animation-name: nav-item;
+            animation-duration: 0.5s;
+            animation-fill-mode: forwards;
+            .item-name {
+                animation-name: item-name;
+                animation-duration: 0.5s;
+                animation-fill-mode: forwards;
+                display: block;
+                overflow: unset;
+                width: unset;
+            }
+        }
+    }
+}
+
+.treding-now-section{
+    overflow: hidden;
+    >h1{
+        color: #F1F1F1;
+        margin-bottom: 15px;
+    }
+    .slick-list{
+        .slick-track{
+            .slick-slide{
+                cursor: pointer;
+            }
+        }
+    }
+
+}
+
+
+@keyframes nav {
+    from {
+        max-width: 9vw;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    to {
+        max-width: 25vw;
+        background-color: rgba(0 0 0 / 80%);
+
+    }
+}
+@keyframes nav-item {
+    from {
+    }
+    to {
+        border-radius: 10px;
+        width: 100%;
+        grid-column-gap: 15%;
+    }
+}
+@keyframes item-name {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
